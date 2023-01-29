@@ -1,0 +1,11 @@
+Gameboard()
+ stores array
+ getBoard()
+
+Player()
+ has sign (x / o)
+ can place sign
+
+Game()
+ checkWin() // checkRow checkColumn checkDiag checkAntidiag
+ render()

@@ -27,20 +27,53 @@ const Player = function (number, sign) {
 
 const Game = () => {
   let game = gameBoard();
-  let player1 = Player("1", "x");
-  let player2 = Player("2", "O");
   const display = () => {
     game.printBoard();
   };
-  const checkWin = () => {
-    for (let i = 0; i < 3; i++) {
-      for (let j = 2; j >= 0; j--) {}
+  const checkRow = (playerSymbol) => {
+    for (let row = 0; row < 3; row++) {
+      for (let column = 2; column >= 0; column--) {
+        if (playerSymbol != game[row][column]) {
+          break;
+        } else {
+          console.log("Win!");
+        }
+      }
     }
   };
+
+  const checkColumn = (playerSymbol) => {
+    for (let column = 0; column < 3; column++) {
+      for (let row = 0; row < 3; row++) {
+        if (playerSymbol != game[column][row]) {
+          break;
+        } else {
+          console.log("Win!");
+        }
+      }
+    }
+  };
+
+  const checkDiag = (playerSymbol) => {
+    for (let i = 0; i < 3; i++) {
+      if (playerSymbol != game[i][i]) {
+        break;
+      } else {
+        console.log("Win!");
+      }
+    }
+  };
+
+  const checkAntiDiag = (playerSymbol) => {
+    //some code
+  };
+
   game.place(0, 1, player1.getSign());
   game.place(0, 2, player2.getSign());
-  return { display };
+  return { display, checkRow, checkColumn, checkDiag, checkAntiDiag };
 };
 
+let player1 = Player("1", "x");
+let player2 = Player("2", "O");
 newGame = Game();
 newGame.display();
