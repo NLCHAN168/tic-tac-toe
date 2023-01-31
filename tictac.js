@@ -96,7 +96,7 @@ const Game = () => {
 let player1 = Player("1", "x");
 let player2 = Player("2", "O");
 newGame = Game();
-newGame.move(0, 0, player1.getSign());
-newGame.move(0, 1, player1.getSign());
-newGame.move(0, 2, player1.getSign());
+newGame.move(2, 0, player1.getSign());
+newGame.move(2, 1, player1.getSign());
+newGame.move(2, 2, player1.getSign());
 newGame.display();
