@@ -36,63 +36,61 @@ const Game = () => {
   const move = (ind1, ind2, playerSymbol) => {
     game.place(ind1, ind2, playerSymbol);
     newBoard = game.arrayCopy();
+    checkWin(playerSymbol, ind1);
   };
 
-  const checkWin = (playerSymbol) => {
-    console.log("[0][0]:" + newBoard[0][0]);
-    checkRow(playerSymbol);
-    checkColumn(playerSymbol);
-    checkDiag(playerSymbol);
-    checkAntiDiag(playerSymbol);
-  };
-
-  const checkRow = (playerSymbol) => {
-    for (let row = 0; row < 3; row++) {
-      for (let column = 2; column >= 0; column--) {
-        if (playerSymbol != newBoard[row][column]) {
-          break;
-        } else {
-          console.log("Win!");
-        }
-      }
+  const checkWin = (playerSymbol, y) => {
+    if (
+      checkRow(playerSymbol, y) ||
+      checkColumn(playerSymbol, y) ||
+      checkDiag(playerSymbol) ||
+      checkAntiDiag(playerSymbol)
+    ) {
+      console.log(playerSymbol + " Player Wins!");
     }
   };
 
-  const checkColumn = (playerSymbol) => {
-    for (let column = 0; column < 3; column++) {
-      for (let row = 0; row < 3; row++) {
-        if (playerSymbol != newBoard[column][row]) {
-          break;
-        } else {
-          console.log("Win!");
-        }
+  const checkRow = (playerSymbol, y) => {
+    for (let col = 0, row = y; col < 3; col++) {
+      if (playerSymbol != newBoard[row][col]) {
+        return false;
       }
     }
+    return true;
+  };
+
+  const checkColumn = (playerSymbol, y) => {
+    for (let col = y, row = 0; row < 3; row++) {
+      if (playerSymbol != newBoard[row][col]) {
+        return false;
+      }
+    }
+    return true;
   };
 
   const checkDiag = (playerSymbol) => {
     for (let i = 0; i < 3; i++) {
       if (playerSymbol != newBoard[i][i]) {
-        break;
-      } else {
-        console.log("Win!");
+        return false;
       }
     }
+    return true;
   };
 
   const checkAntiDiag = (playerSymbol) => {
     let i = 2;
     let j = 0;
-    while (playerSymbol == newBoard[i][j] && i >= 0 && j < 3) {
+    while (i > 0 && j < 3) {
       i--;
       j++;
-      if (i === 0 && j === 2) {
-        console.log("Win!");
+      if (playerSymbol != newBoard[i][j]) {
+        return false;
       }
     }
+    return true;
   };
 
-  return { display, move, checkWin };
+  return { display, move, checkWin, checkWin };
 };
 
 let player1 = Player("1", "x");
@@ -102,4 +100,3 @@ newGame.move(0, 0, player1.getSign());
 newGame.move(0, 1, player1.getSign());
 newGame.move(0, 2, player1.getSign());
 newGame.display();
-newGame.checkWin(player1.getSign());
