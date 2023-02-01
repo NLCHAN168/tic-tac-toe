@@ -6,6 +6,10 @@ const gameBoard = () => {
   ];
   const place = (ind1, ind2, sign) => {
     board[ind1][ind2] = sign;
+    var tile = (ind1 + "-" + ind2).toString();
+    console.log(tile.toString());
+    const changeTile = document.getElementById(tile);
+    changeTile.innerText = sign;
   };
   const printBoard = () => {
     console.table(board);
@@ -46,7 +50,8 @@ const Game = () => {
       checkDiag(playerSymbol) ||
       checkAntiDiag(playerSymbol)
     ) {
-      console.log(playerSymbol + " Player Wins!");
+      const winBox = document.getElementById("win");
+      winBox.innerText = playerSymbol + " Player Wins!";
     }
   };
 
@@ -90,7 +95,7 @@ const Game = () => {
     return true;
   };
 
-  return { display, move, checkWin, checkWin };
+  return { display, move, checkWin };
 };
 
 let player1 = Player("1", "x");
