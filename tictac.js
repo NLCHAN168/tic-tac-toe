@@ -5,9 +5,10 @@ const gameBoard = () => {
     ["_", "_", "_"],
   ];
   const place = (ind1, ind2, sign) => {
-    board[ind1][ind2] = sign;
+    if (board[ind1][ind2] != "x" && board[ind1][ind2] != "o") {
+      board[ind1][ind2] = sign;
+    }
     var tile = (ind1 + "-" + ind2).toString();
-    console.log(tile.toString());
     const changeTile = document.getElementById(tile);
     changeTile.innerText = sign;
   };
@@ -27,10 +28,13 @@ const Player = function (number, sign) {
   const getSign = () => {
     return sign;
   };
-  return { number, sign, getNumber, getSign };
+  return { getNumber, getSign };
 };
 
 const Game = () => {
+  let player1 = Player("1", "x");
+  let player2 = Player("2", "O");
+  let currentPlayer = player1;
   let game = gameBoard();
   let newBoard = game.arrayCopy();
   const display = () => {
@@ -41,8 +45,10 @@ const Game = () => {
     game.place(ind1, ind2, playerSymbol);
     newBoard = game.arrayCopy();
     checkWin(playerSymbol, ind1);
+    currentPlayer === player1
+      ? (currentPlayer = player2)
+      : (currentPlayer = player1);
   };
-
   const checkWin = (playerSymbol, y) => {
     if (
       checkRow(playerSymbol, y) ||
@@ -95,13 +101,23 @@ const Game = () => {
     return true;
   };
 
-  return { display, move, checkWin };
+  const getPlayerSign = () => {
+    return currentPlayer.getSign();
+  };
+
+  return { display, move, checkWin, getPlayerSign };
 };
 
-let player1 = Player("1", "x");
-let player2 = Player("2", "O");
+let boxes = document.getElementsByTagName("td");
+for (let i = 0; i < boxes.length; i++) {
+  let clickBox = boxes[i];
+  clickBox.addEventListener("click", () => {
+    // newGame.move(, , symbol);
+    console.log("Move!");
+  });
+}
 newGame = Game();
-newGame.move(2, 0, player1.getSign());
-newGame.move(2, 1, player1.getSign());
-newGame.move(2, 2, player1.getSign());
+newGame.move(2, 0, newGame.getPlayerSign());
+newGame.move(2, 1, newGame.getPlayerSign());
+newGame.move(2, 2, newGame.getPlayerSign());
 newGame.display();
