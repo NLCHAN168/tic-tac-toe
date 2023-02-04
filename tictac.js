@@ -44,38 +44,42 @@ const Game = () => {
   const move = (ind1, ind2, playerSymbol) => {
     game.place(ind1, ind2, playerSymbol);
     newBoard = game.arrayCopy();
-    checkWin(playerSymbol, ind1);
+    checkWin(playerSymbol, ind1, ind2);
     currentPlayer === player1
       ? (currentPlayer = player2)
       : (currentPlayer = player1);
   };
-  const checkWin = (playerSymbol, y) => {
+  const checkWin = (playerSymbol, ind1, ind2) => {
     if (
-      checkRow(playerSymbol, y) ||
-      checkColumn(playerSymbol, y) ||
+      checkRow(playerSymbol, ind1) ||
+      checkColumn(playerSymbol, ind2) ||
       checkDiag(playerSymbol) ||
       checkAntiDiag(playerSymbol)
     ) {
-      const winBox = document.getElementById("win");
-      winBox.innerText = playerSymbol + " Player Wins!";
+      // const winBox = document.getElementById("win");
+      // winBox.innerText = playerSymbol + " Player Wins!";
     }
   };
 
-  const checkRow = (playerSymbol, y) => {
-    for (let col = 0, row = y; col < 3; col++) {
+  const checkRow = (playerSymbol, row) => {
+    for (let col = 0; col < 3; col++) {
       if (playerSymbol != newBoard[row][col]) {
         return false;
       }
     }
+    const winBox = document.getElementById("win");
+    winBox.innerText = playerSymbol + " Player Wins by Row";
     return true;
   };
 
-  const checkColumn = (playerSymbol, y) => {
-    for (let col = y, row = 0; row < 3; row++) {
+  const checkColumn = (playerSymbol, col) => {
+    for (let row = 0; row < 3; row++) {
       if (playerSymbol != newBoard[row][col]) {
         return false;
       }
     }
+    const winBox = document.getElementById("win");
+    winBox.innerText = playerSymbol + " Player Wins by Column";
     return true;
   };
 
@@ -85,6 +89,8 @@ const Game = () => {
         return false;
       }
     }
+    const winBox = document.getElementById("win");
+    winBox.innerText = playerSymbol + " Player Wins by Diag";
     return true;
   };
 
@@ -92,12 +98,14 @@ const Game = () => {
     let i = 2;
     let j = 0;
     while (i > 0 && j < 3) {
-      i--;
-      j++;
       if (playerSymbol != newBoard[i][j]) {
         return false;
       }
+      i--;
+      j++;
     }
+    const winBox = document.getElementById("win");
+    winBox.innerText = playerSymbol + " Player Wins by antidiag";
     return true;
   };
 
@@ -108,16 +116,31 @@ const Game = () => {
   return { display, move, checkWin, getPlayerSign };
 };
 
+newGame = Game();
+
 let boxes = document.getElementsByTagName("td");
-for (let i = 0; i < boxes.length; i++) {
+console.log(boxes.length);
+for (let i = 0; i < 3; i++) {
   let clickBox = boxes[i];
   clickBox.addEventListener("click", () => {
-    // newGame.move(, , symbol);
-    console.log("Move!");
+    newGame.move(0, i, newGame.getPlayerSign());
+    newGame.checkWin(newGame.getPlayerSign(), 0, i);
   });
 }
-newGame = Game();
-newGame.move(2, 0, newGame.getPlayerSign());
-newGame.move(2, 1, newGame.getPlayerSign());
-newGame.move(2, 2, newGame.getPlayerSign());
-newGame.display();
+for (let i = 3; i < 6; i++) {
+  let clickBox = boxes[i];
+  clickBox.addEventListener("click", () => {
+    newGame.move(1, i - 3, newGame.getPlayerSign());
+    newGame.checkWin(newGame.getPlayerSign(), 1, i - 3);
+  });
+}
+
+for (let i = 6; i < boxes.length; i++) {
+  let clickBox = boxes[i];
+  clickBox.addEventListener("click", () => {
+    newGame.move(2, i - 6, newGame.getPlayerSign());
+    newGame.checkWin(newGame.getPlayerSign(), 2, i - 6);
+  });
+}
+
+// newGame.display();
