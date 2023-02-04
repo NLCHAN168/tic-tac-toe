@@ -95,7 +95,7 @@ const Game = () => {
   };
 
   const checkAntiDiag = (playerSymbol) => {
-    let win = false;
+    let win = true;
     let i = 2;
     let j = 0;
     while (i > 0 && j < 3) {
