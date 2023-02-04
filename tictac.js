@@ -79,7 +79,7 @@ const Game = () => {
       }
     }
     const winBox = document.getElementById("win");
-    // winBox.innerText = playerSymbol + " Player Wins by Column";
+    winBox.innerText = playerSymbol + " Player Wins by Column";
     return true;
   };
 
@@ -90,24 +90,19 @@ const Game = () => {
       }
     }
     const winBox = document.getElementById("win");
-    // winBox.innerText = playerSymbol + " Player Wins by Diag";
+    winBox.innerText = playerSymbol + " Player Wins by Diag";
     return true;
   };
 
   const checkAntiDiag = (playerSymbol) => {
-    let win = true;
-    let i = 2;
-    let j = 0;
-    while (i > 0 && j < 3) {
+    for (let i = 2, j = 0; i > 0, j < 3; i--, j++) {
       if (playerSymbol != newBoard[i][j]) {
-        win = false;
+        return false;
       }
-      i--;
-      j++;
     }
+    return true;
     const winBox = document.getElementById("win");
-    // winBox.innerText = playerSymbol + " Player Wins by antidiag";
-    return win;
+    winBox.innerText = playerSymbol + " Player Wins by antidiag";
   };
 
   const getPlayerSign = () => {
@@ -120,25 +115,23 @@ const Game = () => {
 newGame = Game();
 
 let boxes = document.getElementsByTagName("td");
-console.log(boxes.length);
+
 for (let i = 0; i < 3; i++) {
-  let clickBox = boxes[i];
-  clickBox.addEventListener("click", () => {
+  boxes[i].addEventListener("click", () => {
     newGame.move(0, i, newGame.getPlayerSign());
     newGame.checkWin(newGame.getPlayerSign(), 0, i);
   });
 }
+
 for (let i = 3; i < 6; i++) {
-  let clickBox = boxes[i];
-  clickBox.addEventListener("click", () => {
+  boxes[i].addEventListener("click", () => {
     newGame.move(1, i - 3, newGame.getPlayerSign());
     newGame.checkWin(newGame.getPlayerSign(), 1, i - 3);
   });
 }
 
 for (let i = 6; i < boxes.length; i++) {
-  let clickBox = boxes[i];
-  clickBox.addEventListener("click", () => {
+  boxes[i].addEventListener("click", () => {
     newGame.move(2, i - 6, newGame.getPlayerSign());
     newGame.checkWin(newGame.getPlayerSign(), 2, i - 6);
   });
