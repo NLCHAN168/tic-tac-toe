@@ -56,8 +56,8 @@ const Game = () => {
       checkDiag(playerSymbol) ||
       checkAntiDiag(playerSymbol)
     ) {
-      // const winBox = document.getElementById("win");
-      // winBox.innerText = playerSymbol + " Player Wins!";
+      const winBox = document.getElementById("win");
+      winBox.innerText = playerSymbol + " Player Wins!";
     }
   };
 
@@ -68,7 +68,7 @@ const Game = () => {
       }
     }
     const winBox = document.getElementById("win");
-    winBox.innerText = playerSymbol + " Player Wins by Row";
+    // winBox.innerText = playerSymbol + " Player Wins by Row";
     return true;
   };
 
@@ -79,7 +79,7 @@ const Game = () => {
       }
     }
     const winBox = document.getElementById("win");
-    winBox.innerText = playerSymbol + " Player Wins by Column";
+    // winBox.innerText = playerSymbol + " Player Wins by Column";
     return true;
   };
 
@@ -90,23 +90,24 @@ const Game = () => {
       }
     }
     const winBox = document.getElementById("win");
-    winBox.innerText = playerSymbol + " Player Wins by Diag";
+    // winBox.innerText = playerSymbol + " Player Wins by Diag";
     return true;
   };
 
   const checkAntiDiag = (playerSymbol) => {
+    let win = false;
     let i = 2;
     let j = 0;
     while (i > 0 && j < 3) {
       if (playerSymbol != newBoard[i][j]) {
-        return false;
+        win = false;
       }
       i--;
       j++;
     }
     const winBox = document.getElementById("win");
-    winBox.innerText = playerSymbol + " Player Wins by antidiag";
-    return true;
+    // winBox.innerText = playerSymbol + " Player Wins by antidiag";
+    return win;
   };
 
   const getPlayerSign = () => {
@@ -142,5 +143,3 @@ for (let i = 6; i < boxes.length; i++) {
     newGame.checkWin(newGame.getPlayerSign(), 2, i - 6);
   });
 }
-
-// newGame.display();
