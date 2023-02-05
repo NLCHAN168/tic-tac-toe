@@ -26,18 +26,11 @@ const gameBoard = (() => {
 
   const arrayCopy = () => board.map((obj) => ({ ...obj }));
 
-  const reset = () =>
-    (board = [
-      ["_", "_", "_"],
-      ["_", "_", "_"],
-      ["_", "_", "_"],
-    ]);
-
   const returnTile = (ind1, ind2) => {
     return board[ind1][ind2];
   };
 
-  return { arrayCopy, printBoard, place, reset, returnTile, forcePlace };
+  return { arrayCopy, printBoard, place, returnTile, forcePlace };
 })();
 
 const Player = function (number, sign) {
