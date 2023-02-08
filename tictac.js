@@ -138,7 +138,7 @@ const Game = () => {
       const winBox = document.getElementById("win");
       winBox.innerText = playerSymbol + " Player Wins!";
     }
-    if (turn == 9) {
+    if (turn == 9 && !gameOver) {
       gameOver = true;
       const winBox = document.getElementById("win");
       winBox.innerText = "Game is a tie!";
