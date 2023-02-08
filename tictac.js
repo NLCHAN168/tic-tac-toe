@@ -44,7 +44,7 @@ const Player = function (number, sign) {
 };
 
 const Game = () => {
-  let turn = 1;
+  let turn = 0;
   let gameOver = false;
   let player1 = Player("1", "x");
   let player2 = Player("2", "O");
@@ -137,8 +137,7 @@ const Game = () => {
       console.log("Winner! gameOver variable " + gameOver);
       const winBox = document.getElementById("win");
       winBox.innerText = playerSymbol + " Player Wins!";
-    }
-    if (turn == 9 && !gameOver) {
+    } else if (turn == 9 && !gameOver) {
       gameOver = true;
       const winBox = document.getElementById("win");
       winBox.innerText = "Game is a tie!";
